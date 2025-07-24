@@ -1,0 +1,205 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#define MAX_LENGTH 1000
+
+using namespace std;
+
+//struct
+struct TTS {
+    string ma_sach;
+    string ten_sach;
+    string tac_gia;
+    string nam_xuat_ban;
+    long int so_luong;
+};
+
+struct DS {
+    TTS mang_thong_tin [MAX_LENGTH];
+    int so_loai_sach;
+};
+
+//prototype
+void doc_danh_sach_tu_file (DS& danh_sach, string& filename);
+void in_thong_tin_moi_cuon_sach (TTS thong_tin_sach) ;
+void in_danh_sach (DS danh_sach);
+void tim_kiem_sach_nang_cao (DS danh_sach);
+string to_lower (string chuoi);
+void cap_nhat_so_luong_sach (DS &danh_sach);
+void liet_ke_sach_cung_nam (DS danh_sach);
+
+int main () {
+    TTS thong_tin_sach;
+    DS danh_sach;
+    string filename = "input.txt";
+    
+    doc_danh_sach_tu_file (danh_sach, filename);
+    // nhap_danh_sach (danh_sach);
+    in_danh_sach (danh_sach);
+    tim_kiem_sach_nang_cao (danh_sach);
+    cap_nhat_so_luong_sach (danh_sach);
+    liet_ke_sach_cung_nam (danh_sach);
+    
+    // //Ghi file
+    // FILE *fo = fopen ("output.txt", "w");
+    
+    
+    // fclose(fo);
+    // fclose(fp);
+
+    return 0;
+}
+
+void doc_danh_sach_tu_file (DS& danh_sach, string& filename) {
+    ifstream file_in(filename);
+
+    if (!file_in.is_open()) {
+        cerr << "Loi: Khong the mo file '" << endl;
+        danh_sach.so_loai_sach = 0;
+        return;
+    }
+
+    while (getline(file_in, sach_moi.ma_sach)) {
+        if (danh_sach.so_loai_sach >= MAX_LENGTH) {
+            cout << "Canh bao: File co qua nhieu sach, da dat toi gioi han " << endl;
+            break;
+        }
+
+        TTS sach_moi;
+        string so_luong;
+
+        // Đọc từng trường, mỗi trường là một dòng
+        // Nếu bất kỳ getline nào thất bại, thoát vòng lặp
+        if (!getline(file_in, sach_moi.ma_sach)) break;
+        if (!getline(file_in, sach_moi.ten_sach)) break;
+        if (!getline(file_in, sach_moi.tac_gia)) break;
+        if (!getline(file_in, sach_moi.nam_xuat_ban)) break;
+        if (!getline(file_in, so_luong)) break; // so_luong giờ là string
+        sach_moi.so_luong = stoi(so_luong);
+
+        // Nếu đọc thành công cả 5 trường
+        danh_sach.mang_thong_tin[danh_sach.so_loai_sach] = sach_moi;
+        danh_sach.so_loai_sach++;
+    }
+    file_in.close();
+    cout << "Da doc du lieu tu file '" << endl;
+}
+
+void in_thong_tin_moi_cuon_sach (TTS thong_tin_sach) {
+    cout << "Ma sach: "<<thong_tin_sach.ma_sach <<endl;
+    cout << "Ten sach: "<<thong_tin_sach.ten_sach<<endl;
+    cout << "Ten tac gia: "<<thong_tin_sach.tac_gia <<endl;
+    cout << "Nam xuat ban: "<<thong_tin_sach.nam_xuat_ban <<endl;
+    cout << "So luong sach: "<<thong_tin_sach.so_luong <<endl;
+}
+
+void in_danh_sach (DS danh_sach) {
+    cout << "Danh sach vua duoc nhap la: " << endl;
+    for (int i = 0; i<danh_sach.so_loai_sach; i++) {
+        cout << "Sach thu " << i+1 << ": " <<endl;
+        in_thong_tin_moi_cuon_sach (danh_sach.mang_thong_tin[i]);
+        cout << endl;
+    }
+}
+
+void cap_nhat_so_luong_sach (DS &danh_sach) {
+    string ma_sach_can_cap_nhat;
+    bool ket_qua = false;
+    long int so_luong_moi;
+    
+    cout << endl << "Nhap ma sach can cap nhat: ";
+    getline (cin, ma_sach_can_cap_nhat);
+
+    for (int i = 0; i<danh_sach.so_loai_sach; i++) {
+        if (ma_sach_can_cap_nhat == danh_sach.mang_thong_tin[i].ma_sach) {
+            ket_qua = true;
+            cout << "So luong sach moi la: ";
+            cin >> so_luong_moi;
+            
+            cin.ignore();
+            
+            danh_sach.mang_thong_tin[i].so_luong = so_luong_moi;
+            cout << endl << "Thong tin sach sau cap nhat: " << endl;
+            in_thong_tin_moi_cuon_sach (danh_sach.mang_thong_tin[i]);
+            cout << endl;
+            break;
+        }
+    }
+    
+    if (!ket_qua) {
+        cout << "Khong tim thay sach trong co so du lieu"<<endl;
+    }
+}
+
+void liet_ke_sach_cung_nam(DS danh_sach) {
+    string tong_hop_nam_xuat_ban[MAX_LENGTH];
+
+    //Lưu các năm xuất bản vào 1 mảng
+    for (int i = 0; i < danh_sach.so_loai_sach; i++) {
+        tong_hop_nam_xuat_ban[i] = danh_sach.mang_thong_tin[i].nam_xuat_ban;
+    }
+
+    //Tạo biến năm đã xét để khúc sau duyệt xem thử năm đó đã được duyệt qua chưa
+    bool nam_da_xet[MAX_LENGTH] = {false};
+    bool co_sach_cung_nam = false;
+
+    cout << "Thong tin ve cac dau sach xuat ban cung nam: "<<endl;
+    for (int i=0; i<danh_sach.so_loai_sach; i++){
+        for (int j = i+1; j<danh_sach.so_loai_sach; j++){
+            if (!nam_da_xet[i] && tong_hop_nam_xuat_ban[i] == tong_hop_nam_xuat_ban[j]){
+                //Nếu có hai đầu sách trở lên cùng năm thì in thông tin các đầu sách đó ra màn hình trực tiếp.
+                //Gán năm đó là đã xét rồi để không cần duyệt lại.
+                co_sach_cung_nam = true;
+                cout << "Nam " << danh_sach.mang_thong_tin[i].nam_xuat_ban << ": " << endl;
+                in_thong_tin_moi_cuon_sach(danh_sach.mang_thong_tin[i]);
+                cout << endl;
+                in_thong_tin_moi_cuon_sach(danh_sach.mang_thong_tin[j]);
+                cout << endl;
+                nam_da_xet[i] = true;
+                nam_da_xet[j] = true;
+                cout << endl;
+            }
+        }
+    }
+
+    if (!co_sach_cung_nam) {
+        cout << "Khong co cac dau sach nao xuat ban cung nam"<< endl;
+    }
+}
+
+void tim_kiem_sach_nang_cao (DS danh_sach) {
+    string advanced_searching;
+    bool result = false;
+
+    cout << "Nhap ma sach/ten sach/tac gia/nam xuat ban ban muon tim kiem: ";
+    getline (cin, advanced_searching);
+    
+    for (int i = 0; i<danh_sach.so_loai_sach; i++) {
+        TTS current_book = danh_sach.mang_thong_tin[i];
+        if ((to_lower(advanced_searching) == to_lower(current_book.ten_sach)) ||
+            (to_lower(advanced_searching) == to_lower(current_book.ma_sach)) ||
+            (to_lower(advanced_searching) == to_lower(current_book.tac_gia)) ||
+            (to_lower(advanced_searching) == to_lower(current_book.nam_xuat_ban))) {
+            result = true;
+            cout << "Thong tin ve cuon sach ban muon tim la: " << endl;
+            in_thong_tin_moi_cuon_sach (current_book);
+        }
+    }
+    
+    if (!result) {
+        cout << "Khong tim thay sach tuong ung trong co so du lieu" << endl;
+    }
+}
+
+string to_lower (string chuoi) {
+    for (int i = 0; i< (int)chuoi.size(); i++){
+        if (chuoi[i] >= 'A' && chuoi[i] <= 'Z'){
+            chuoi[i] = chuoi[i] + 32;
+        }
+    }
+    return chuoi;
+}
+
+
+    
+
