@@ -88,6 +88,7 @@ Dự án này có thể được mở rộng với các tính năng sau:
 * **Sắp xếp:** Sắp xếp danh sách sách theo tên, tác giả, năm xuất bản, v.v.
 * **Tối ưu hóa tìm kiếm:** Áp dụng các thuật toán tìm kiếm hiệu quả hơn (ví dụ: tìm kiếm nhị phân nếu dữ liệu được sắp xếp).
 * **Xử lý lỗi mạnh mẽ hơn:** Bắt và xử lý các trường hợp lỗi nhập liệu hoặc file không hợp lệ một cách chi tiết hơn.
+* **Thêm hàm ghi file vào một file output**
 
 --------------------------------------------------------------------------------------------------------------------------
 
