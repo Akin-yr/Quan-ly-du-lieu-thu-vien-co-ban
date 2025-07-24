@@ -1,0 +1,25 @@
+MS001
+Toan Hoc Cao Cap A1
+Nguyen Van A
+2020
+15
+MS002
+Lap Trinh Huong Doi Tuong
+Tran Thi B
+2021
+10
+MS003
+Co So Du Lieu
+Le Van C
+2020
+20
+MS004
+Khoa Hoc Du Lieu Nhap Mon
+Pham Thi D
+2022
+8
+MS005
+Tri Tue Nhan Tao Co Ban
+Hoang Van E
+2023
+12
