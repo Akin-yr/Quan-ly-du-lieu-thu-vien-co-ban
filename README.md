@@ -95,6 +95,6 @@ Dự án này có thể được mở rộng với các tính năng sau:
 ## ✉️ Liên hệ
 
 Nếu bạn có bất kỳ câu hỏi hoặc góp ý nào về dự án, đừng ngần ngại liên hệ với tôi qua:
-* **Email:** [ralandotutrinh0576@gmail.com](mailto:ralandotutrinh0576@gmail.com)
+* **Email:** [ralandotutrinh@gmail.com](mailto:ralandotutrinh@gmail.com)
 * **LinkedIn:** [Ra Lan Đỗ Tú Trinh](https://www.linkedin.com/in/ra-lan-do-tu-trinh-199217279/)
 --------------------------------------------------------------------------------------------------------------------------
